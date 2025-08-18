@@ -11,5 +11,5 @@ plugins {
 }
 
 rootProject.name = "otkotlin-prj"
-includeBuild("lessons")
+//includeBuild("lessons")
 includeBuild("my-kotlin-project")

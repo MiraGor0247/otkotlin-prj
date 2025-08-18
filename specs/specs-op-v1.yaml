@@ -1,0 +1,428 @@
+openapi: 3.0.3
+info:
+  title: "Order payments ${VERSION_APP}"
+  description: This is an APP for collecting payments for orders
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: op
+    description: Оплата заказа
+paths:
+  /op/create:
+    post:
+      tags:
+        - op
+      summary: Create op
+      operationId: opCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpCreateResponse'
+  /op/read:
+    post:
+      tags:
+        - op
+      summary: Read op
+      operationId: opRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpReadResponse'
+  /op/update:
+    post:
+      tags:
+        - op
+      summary: Update op
+      operationId: opUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpUpdateResponse'
+  /op/delete:
+    post:
+      tags:
+        - op
+      summary: Delete op
+      operationId: opDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpDeleteResponse'
+  /op/search:
+    post:
+      tags:
+        - op
+      summary: Search op
+      operationId: opSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpSearchResponse'
+
+components:
+  schemas:
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/OpCreateRequest'
+          read:   '#/components/schemas/OpReadRequest'
+          update: '#/components/schemas/OpUpdateRequest'
+          delete: '#/components/schemas/OpDeleteRequest'
+          search: '#/components/schemas/OpSearchRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/OpCreateResponse'
+          read:   '#/components/schemas/OpReadResponse'
+          update: '#/components/schemas/OpUpdateResponse'
+          delete: '#/components/schemas/OpDeleteResponse'
+          search: '#/components/schemas/OpSearchResponse'
+          init: '#/components/schemas/OpInitResponse'
+
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+    OpId:
+      type: string
+      description: Идентификатор заказа
+    OpLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
+    BaseOp:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        orderNum:
+          type: string
+          description: Номер заказа
+        title:
+          type: string
+          description: Описание заказа
+        ownerId:
+          $ref: '#/components/schemas/UserId'
+        amount:
+          type: double
+          description: Сумма заказа
+        paymentId:
+          type: string
+          description: Идентификатор платежа
+        payment:
+          type: double
+          description: Сумма платежа
+        opType:
+          $ref: '#/components/schemas/PaidType'
+        visibility:
+          $ref: '#/components/schemas/OpVisibility'
+
+    PaidType:
+      type: string
+      description: 'Признак оплаты заказа: оплачен или не оплачен'
+      enum:
+        - paid
+        - unpaid
+
+    OpVisibility:
+      type: string
+      description: 'Тип видимости заказа. Возможные значения: видит только администратор, только зарегистрированный в системе пользователь, видимо всем'
+      enum:
+        - adminOnly
+        - registeredOnly
+        - public
+
+    OpInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    OpCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOp'
+
+    OpCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OpRequestDebug'
+        - type: object
+          properties:
+            op:
+              $ref: '#/components/schemas/OpCreateObject'
+
+    OpReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OpId'
+
+    OpReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OpRequestDebug'
+        - type: object
+          properties:
+            op:
+              $ref: '#/components/schemas/OpReadObject'
+
+    OpUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOp'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OpId'
+            lock:
+              $ref: '#/components/schemas/OpLock'
+
+    OpUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OpRequestDebug'
+        - type: object
+          properties:
+            op:
+              $ref: '#/components/schemas/OpUpdateObject'
+
+    OpDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/OpId'
+            lock:
+              $ref: '#/components/schemas/OpLock'
+
+    OpDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OpRequestDebug'
+        - type: object
+          properties:
+            op:
+              $ref: '#/components/schemas/OpDeleteObject'
+
+    OpSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться в объявлениях
+        userId:
+          $ref: '#/components/schemas/UserId'
+        opType:
+          $ref: '#/components/schemas/PaidType'
+
+    OpSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/OpRequestDebug'
+        - type: object
+          properties:
+            opFilter:
+              $ref: '#/components/schemas/OpSearchFilter'
+
+
+    OpResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseOp'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/OpId'
+            userId:
+              $ref: '#/components/schemas/UserId'
+            lock:
+              $ref: '#/components/schemas/OpLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/OpPermissions'
+
+    OpPermissions:
+      type: string
+      description: Доступы для операций над заказами
+      enum:
+        - read
+        - update
+        - delete
+        - makeVisiblePublic
+        - makeVisibleAdmin
+        - makeVisibleRegistered
+
+    OpResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним заказом
+          properties:
+            op:
+              $ref: '#/components/schemas/OpResponseObject'
+
+    OpResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных заказов
+          properties:
+            ops:
+              type: array
+              items:
+                $ref: '#/components/schemas/OpResponseObject'
+
+    OpCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OpResponseSingle'
+
+    OpReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OpResponseSingle'
+
+    OpUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OpResponseSingle'
+
+    OpDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OpResponseSingle'
+
+    OpSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/OpResponseMulti'
+
+    # STUBS ======================
+    OpRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    OpRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/OpDebug'
+
+    OpDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/OpRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/OpRequestDebugStubs'
+
+    OpRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badNumber
+        - badVisibility
+        - cannotDelete
+        - badSearchString

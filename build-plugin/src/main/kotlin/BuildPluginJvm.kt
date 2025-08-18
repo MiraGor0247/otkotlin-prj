@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.plugin
+package ru.otus.otuskotlin.mykotlin.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
