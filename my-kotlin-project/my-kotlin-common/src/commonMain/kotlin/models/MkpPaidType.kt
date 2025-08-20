@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-enum class MkplPaidType {
+enum class MkpPaidType {
     NONE,
     PAID,
     UNPAID,

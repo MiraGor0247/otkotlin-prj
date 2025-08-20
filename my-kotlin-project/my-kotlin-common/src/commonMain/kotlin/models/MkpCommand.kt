@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-enum class MkplCommand {
+enum class MkpCommand {
     NONE,
     CREATE,
     READ,

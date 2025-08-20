@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-enum class MkplState {
+enum class MkpState {
     NONE,
     RUNNING,
     FAILING,

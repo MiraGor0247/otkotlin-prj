@@ -1,13 +1,13 @@
 package ru.otus.otuskotlin.mykotlin.mappers.v1
 
 import ru.otus.otuskotlin.mykotlin.api.v1.models.*
-import ru.otus.otuskotlin.mykotlin.common.MkplContext
+import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.models.*
-import ru.otus.otuskotlin.mykotlin.common.models.MkplWorkMode
-import ru.otus.otuskotlin.mykotlin.common.stubs.MkplStubs
+import ru.otus.otuskotlin.mykotlin.common.models.MkpWorkMode
+import ru.otus.otuskotlin.mykotlin.common.stubs.MkpStubs
 import ru.otus.otuskotlin.mykotlin.mappers.v1.exceptions.UnknownRequestClass
 
-fun MkplContext.fromTransport(request: IRequest) = when (request) {
+fun MkpContext.fromTransport(request: IRequest) = when (request) {
     is OpCreateRequest -> fromTransport(request)
     is OpReadRequest -> fromTransport(request)
     is OpUpdateRequest -> fromTransport(request)
@@ -16,89 +16,89 @@ fun MkplContext.fromTransport(request: IRequest) = when (request) {
     else -> throw UnknownRequestClass(request.javaClass)
 }
 
-private fun String?.toOpId() = this?.let { MkplOpId(it) } ?: MkplOpId.NONE
-private fun String?.toOpWithId() = MkplOp(id = this.toOpId())
-private fun String?.toOpLock() = this?.let { MkplOpLock(it) } ?: MkplOpLock.NONE
-private fun String?.toUserId() = this?.let { MkplUserId(it) } ?: MkplUserId.NONE
-private fun Double?.toAmount() = this?.let { MkplOpAmount(it) } ?: MkplOpAmount.NONE
-private fun String?.toPaymentId() = this?.let { MkplPaymentId(it) } ?: MkplPaymentId.NONE
+private fun String?.toOpId() = this?.let { MkpOpId(it) } ?: MkpOpId.NONE
+private fun String?.toOpWithId() = MkpOp(id = this.toOpId())
+private fun String?.toOpLock() = this?.let { MkpOpLock(it) } ?: MkpOpLock.NONE
+private fun String?.toUserId() = this?.let { MkpUserId(it) } ?: MkpUserId.NONE
+private fun Double?.toAmount() = this?.let { MkpOpAmount(it) } ?: MkpOpAmount.NONE
+private fun String?.toPaymentId() = this?.let { MkpPaymentId(it) } ?: MkpPaymentId.NONE
 
-private fun OpDebug?.transportToWorkMode(): MkplWorkMode = when (this?.mode) {
-    OpRequestDebugMode.PROD -> MkplWorkMode.PROD
-    OpRequestDebugMode.TEST -> MkplWorkMode.TEST
-    OpRequestDebugMode.STUB -> MkplWorkMode.STUB
-    null -> MkplWorkMode.PROD
+private fun OpDebug?.transportToWorkMode(): MkpWorkMode = when (this?.mode) {
+    OpRequestDebugMode.PROD -> MkpWorkMode.PROD
+    OpRequestDebugMode.TEST -> MkpWorkMode.TEST
+    OpRequestDebugMode.STUB -> MkpWorkMode.STUB
+    null -> MkpWorkMode.PROD
 }
 
-private fun OpDebug?.transportToStubCase(): MkplStubs = when (this?.stub) {
-    OpRequestDebugStubs.SUCCESS -> MkplStubs.SUCCESS
-    OpRequestDebugStubs.NOT_FOUND -> MkplStubs.NOT_FOUND
-    OpRequestDebugStubs.BAD_ID -> MkplStubs.BAD_ID
-    OpRequestDebugStubs.BAD_TITLE -> MkplStubs.BAD_TITLE
-    OpRequestDebugStubs.BAD_NUMBER -> MkplStubs.BAD_NUMBER
-    OpRequestDebugStubs.BAD_VISIBILITY -> MkplStubs.BAD_VISIBILITY
-    OpRequestDebugStubs.CANNOT_DELETE -> MkplStubs.CANNOT_DELETE
-    OpRequestDebugStubs.BAD_SEARCH_STRING -> MkplStubs.BAD_SEARCH_STRING
-    null -> MkplStubs.NONE
+private fun OpDebug?.transportToStubCase(): MkpStubs = when (this?.stub) {
+    OpRequestDebugStubs.SUCCESS -> MkpStubs.SUCCESS
+    OpRequestDebugStubs.NOT_FOUND -> MkpStubs.NOT_FOUND
+    OpRequestDebugStubs.BAD_ID -> MkpStubs.BAD_ID
+    OpRequestDebugStubs.BAD_TITLE -> MkpStubs.BAD_TITLE
+    OpRequestDebugStubs.BAD_NUMBER -> MkpStubs.BAD_NUMBER
+    OpRequestDebugStubs.BAD_VISIBILITY -> MkpStubs.BAD_VISIBILITY
+    OpRequestDebugStubs.CANNOT_DELETE -> MkpStubs.CANNOT_DELETE
+    OpRequestDebugStubs.BAD_SEARCH_STRING -> MkpStubs.BAD_SEARCH_STRING
+    null -> MkpStubs.NONE
 }
 
-fun MkplContext.fromTransport(request: OpCreateRequest) {
-    command = MkplCommand.CREATE
-    opRequest = request.op?.toInternal() ?: MkplOp()
+fun MkpContext.fromTransport(request: OpCreateRequest) {
+    command = MkpCommand.CREATE
+    opRequest = request.op?.toInternal() ?: MkpOp()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-fun MkplContext.fromTransport(request: OpReadRequest) {
-    command = MkplCommand.READ
+fun MkpContext.fromTransport(request: OpReadRequest) {
+    command = MkpCommand.READ
     opRequest = request.op.toInternal()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun OpReadObject?.toInternal(): MkplOp = if (this != null) {
-    MkplOp(id = id.toOpId())
+private fun OpReadObject?.toInternal(): MkpOp = if (this != null) {
+    MkpOp(id = id.toOpId())
 } else {
-    MkplOp()
+    MkpOp()
 }
 
 
-fun MkplContext.fromTransport(request: OpUpdateRequest) {
-    command = MkplCommand.UPDATE
-    opRequest = request.op?.toInternal() ?: MkplOp()
+fun MkpContext.fromTransport(request: OpUpdateRequest) {
+    command = MkpCommand.UPDATE
+    opRequest = request.op?.toInternal() ?: MkpOp()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-fun MkplContext.fromTransport(request: OpDeleteRequest) {
-    command = MkplCommand.DELETE
+fun MkpContext.fromTransport(request: OpDeleteRequest) {
+    command = MkpCommand.DELETE
     opRequest = request.op.toInternal()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun OpDeleteObject?.toInternal(): MkplOp = if (this != null) {
-    MkplOp(
+private fun OpDeleteObject?.toInternal(): MkpOp = if (this != null) {
+    MkpOp(
         id = id.toOpId(),
         lock = lock.toOpLock(),
     )
 } else {
-    MkplOp()
+    MkpOp()
 }
 
-fun MkplContext.fromTransport(request: OpSearchRequest) {
-    command = MkplCommand.SEARCH
+fun MkpContext.fromTransport(request: OpSearchRequest) {
+    command = MkpCommand.SEARCH
     opFilterRequest = request.opFilter.toInternal()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 
-private fun OpSearchFilter?.toInternal(): MkplOpFilter = MkplOpFilter(
+private fun OpSearchFilter?.toInternal(): MkpOpFilter = MkpOpFilter(
     searchString = this?.searchString ?: ""
 )
 
-private fun OpCreateObject.toInternal(): MkplOp = MkplOp(
+private fun OpCreateObject.toInternal(): MkpOp = MkpOp(
     orderNum = this.orderNum ?: "",
     title = this.title ?: "",
     ownerId = this.ownerId.toUserId(),
@@ -107,7 +107,7 @@ private fun OpCreateObject.toInternal(): MkplOp = MkplOp(
     visibility = this.visibility.fromTransport(),
 )
 
-private fun OpUpdateObject.toInternal(): MkplOp = MkplOp(
+private fun OpUpdateObject.toInternal(): MkpOp = MkpOp(
     id = this.id.toOpId(),
     orderNum = this.orderNum ?: "",
     title = this.title ?: "",
@@ -120,16 +120,16 @@ private fun OpUpdateObject.toInternal(): MkplOp = MkplOp(
     lock = lock.toOpLock(),
 )
 
-private fun OpVisibility?.fromTransport(): MkplVisibility = when (this) {
-    OpVisibility.PUBLIC -> MkplVisibility.VISIBLE_PUBLIC
-    OpVisibility.ADMIN_ONLY -> MkplVisibility.VISIBLE_TO_ADMIN
-    OpVisibility.REGISTERED_ONLY -> MkplVisibility.VISIBLE_TO_REGISTERED
-    null -> MkplVisibility.NONE
+private fun OpVisibility?.fromTransport(): MkpVisibility = when (this) {
+    OpVisibility.PUBLIC -> MkpVisibility.VISIBLE_PUBLIC
+    OpVisibility.ADMIN_ONLY -> MkpVisibility.VISIBLE_TO_ADMIN
+    OpVisibility.REGISTERED_ONLY -> MkpVisibility.VISIBLE_TO_REGISTERED
+    null -> MkpVisibility.NONE
 }
 
-private fun PaidType?.fromTransport(): MkplPaidType = when (this) {
-    PaidType.PAID -> MkplPaidType.PAID
-    PaidType.UNPAID -> MkplPaidType.UNPAID
-    null -> MkplPaidType.NONE
+private fun PaidType?.fromTransport(): MkpPaidType = when (this) {
+    PaidType.PAID -> MkpPaidType.PAID
+    PaidType.UNPAID -> MkpPaidType.UNPAID
+    null -> MkpPaidType.NONE
 }
 

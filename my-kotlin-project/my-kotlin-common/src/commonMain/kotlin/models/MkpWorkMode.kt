@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-enum class MkplWorkMode {
+enum class MkpWorkMode {
     PROD,
     TEST,
     STUB,

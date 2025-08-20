@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.stubs
 
-enum class MkplStubs {
+enum class MkpStubs {
     NONE,
     SUCCESS,
     NOT_FOUND,

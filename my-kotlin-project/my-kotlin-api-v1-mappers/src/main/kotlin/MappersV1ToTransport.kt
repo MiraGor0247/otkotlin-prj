@@ -1,113 +1,113 @@
 package ru.otus.otuskotlin.mykotlin.mappers.v1
 
 import ru.otus.otuskotlin.mykotlin.api.v1.models.*
-import ru.otus.otuskotlin.mykotlin.common.MkplContext
-import ru.otus.otuskotlin.mykotlin.common.exceptions.UnknownMkplCommand
+import ru.otus.otuskotlin.mykotlin.common.MkpContext
+import ru.otus.otuskotlin.mykotlin.common.exceptions.UnknownMkpCommand
 import ru.otus.otuskotlin.mykotlin.common.models.*
 
-fun MkplContext.toTransportOp(): IResponse = when (val cmd = command) {
-    MkplCommand.CREATE -> toTransportCreate()
-    MkplCommand.READ -> toTransportRead()
-    MkplCommand.UPDATE -> toTransportUpdate()
-    MkplCommand.DELETE -> toTransportDelete()
-    MkplCommand.SEARCH -> toTransportSearch()
-    MkplCommand.NONE -> throw UnknownMkplCommand(cmd)
+fun MkpContext.toTransportOp(): IResponse = when (val cmd = command) {
+    MkpCommand.CREATE -> toTransportCreate()
+    MkpCommand.READ -> toTransportRead()
+    MkpCommand.UPDATE -> toTransportUpdate()
+    MkpCommand.DELETE -> toTransportDelete()
+    MkpCommand.SEARCH -> toTransportSearch()
+    MkpCommand.NONE -> throw UnknownMkpCommand(cmd)
 }
 
-fun MkplContext.toTransportCreate() = OpCreateResponse(
+fun MkpContext.toTransportCreate() = OpCreateResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     op = opResponse.toTransportOp()
 )
 
-fun MkplContext.toTransportRead() = OpReadResponse(
+fun MkpContext.toTransportRead() = OpReadResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     op = opResponse.toTransportOp()
 )
 
-fun MkplContext.toTransportUpdate() = OpUpdateResponse(
+fun MkpContext.toTransportUpdate() = OpUpdateResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     op = opResponse.toTransportOp()
 )
 
-fun MkplContext.toTransportDelete() = OpDeleteResponse(
+fun MkpContext.toTransportDelete() = OpDeleteResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     op = opResponse.toTransportOp()
 )
 
-fun MkplContext.toTransportSearch() = OpSearchResponse(
+fun MkpContext.toTransportSearch() = OpSearchResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     ops = opsResponse.toTransportOp()
 )
 
-fun List<MkplOp>.toTransportOp(): List<OpResponseObject>? = this
+fun List<MkpOp>.toTransportOp(): List<OpResponseObject>? = this
     .map { it.toTransportOp() }
     .toList()
     .takeIf { it.isNotEmpty() }
 
-fun MkplOp.toTransportOp(): OpResponseObject = OpResponseObject(
+fun MkpOp.toTransportOp(): OpResponseObject = OpResponseObject(
     id = id.toTransportOp(),
     orderNum = orderNum.takeIf { it.isNotBlank() },
     title = title.takeIf { it.isNotBlank() },
-    ownerId = ownerId.takeIf { it != MkplUserId.NONE }?.asString(),
+    ownerId = ownerId.takeIf { it != MkpUserId.NONE }?.asString(),
     amount = amount.toTransportOp(),
-    paymentId = paymentId.takeIf { it != MkplPaymentId.NONE }?.asString(),
+    paymentId = paymentId.takeIf { it != MkpPaymentId.NONE }?.asString(),
     payment = payment.toTransportOp(),
     opType = opType.toTransportOp(),
     visibility = visibility.toTransportOp(),
     permissions = permissionsClient.toTransportOp(),
 )
 
-internal fun MkplOpId.toTransportOp() = takeIf { it != MkplOpId.NONE }?.asString()
+internal fun MkpOpId.toTransportOp() = takeIf { it != MkpOpId.NONE }?.asString()
 
-internal fun MkplOpAmount.toTransportOp() = takeIf { it != MkplOpAmount.NONE }?.asDouble()
+internal fun MkpOpAmount.toTransportOp() = takeIf { it != MkpOpAmount.NONE }?.asDouble()
 
-private fun Set<MkplOpPermissions>.toTransportOp(): Set<OpPermissions>? = this
+private fun Set<MkpOpPermissions>.toTransportOp(): Set<OpPermissions>? = this
     .map { it.toTransportOp() }
     .toSet()
     .takeIf { it.isNotEmpty() }
 
-private fun MkplOpPermissions.toTransportOp() = when (this) {
-    MkplOpPermissions.READ -> OpPermissions.READ
-    MkplOpPermissions.UPDATE -> OpPermissions.UPDATE
-    MkplOpPermissions.MAKE_VISIBLE_ADMIN -> OpPermissions.MAKE_VISIBLE_ADMIN
-    MkplOpPermissions.MAKE_VISIBLE_REGISTERED -> OpPermissions.MAKE_VISIBLE_REGISTERED
-    MkplOpPermissions.MAKE_VISIBLE_PUBLIC -> OpPermissions.MAKE_VISIBLE_PUBLIC
-    MkplOpPermissions.DELETE -> OpPermissions.DELETE
+private fun MkpOpPermissions.toTransportOp() = when (this) {
+    MkpOpPermissions.READ -> OpPermissions.READ
+    MkpOpPermissions.UPDATE -> OpPermissions.UPDATE
+    MkpOpPermissions.MAKE_VISIBLE_ADMIN -> OpPermissions.MAKE_VISIBLE_ADMIN
+    MkpOpPermissions.MAKE_VISIBLE_REGISTERED -> OpPermissions.MAKE_VISIBLE_REGISTERED
+    MkpOpPermissions.MAKE_VISIBLE_PUBLIC -> OpPermissions.MAKE_VISIBLE_PUBLIC
+    MkpOpPermissions.DELETE -> OpPermissions.DELETE
 }
 
-internal fun MkplVisibility.toTransportOp(): OpVisibility? = when (this) {
-    MkplVisibility.VISIBLE_PUBLIC -> OpVisibility.PUBLIC
-    MkplVisibility.VISIBLE_TO_REGISTERED -> OpVisibility.REGISTERED_ONLY
-    MkplVisibility.VISIBLE_TO_ADMIN -> OpVisibility.ADMIN_ONLY
-    MkplVisibility.NONE -> null
+internal fun MkpVisibility.toTransportOp(): OpVisibility? = when (this) {
+    MkpVisibility.VISIBLE_PUBLIC -> OpVisibility.PUBLIC
+    MkpVisibility.VISIBLE_TO_REGISTERED -> OpVisibility.REGISTERED_ONLY
+    MkpVisibility.VISIBLE_TO_ADMIN -> OpVisibility.ADMIN_ONLY
+    MkpVisibility.NONE -> null
 }
 
-internal fun MkplPaidType.toTransportOp(): PaidType? = when (this) {
-    MkplPaidType.PAID -> PaidType.PAID
-    MkplPaidType.UNPAID -> PaidType.UNPAID
-    MkplPaidType.NONE -> null
+internal fun MkpPaidType.toTransportOp(): PaidType? = when (this) {
+    MkpPaidType.PAID -> PaidType.PAID
+    MkpPaidType.UNPAID -> PaidType.UNPAID
+    MkpPaidType.NONE -> null
 }
 
-private fun List<MkplError>.toTransportErrors(): List<Error>? = this
+private fun List<MkpError>.toTransportErrors(): List<Error>? = this
     .map { it.toTransportOp() }
     .toList()
     .takeIf { it.isNotEmpty() }
 
-private fun MkplError.toTransportOp() = Error(
+private fun MkpError.toTransportOp() = Error(
     code = code.takeIf { it.isNotBlank() },
     group = group.takeIf { it.isNotBlank() },
     field = field.takeIf { it.isNotBlank() },
     message = message.takeIf { it.isNotBlank() },
 )
 
-private fun MkplState.toResult(): ResponseResult? = when (this) {
-    MkplState.RUNNING -> ResponseResult.SUCCESS
-    MkplState.FAILING -> ResponseResult.ERROR
-    MkplState.FINISHING -> ResponseResult.SUCCESS
-    MkplState.NONE -> null
+private fun MkpState.toResult(): ResponseResult? = when (this) {
+    MkpState.RUNNING -> ResponseResult.SUCCESS
+    MkpState.FAILING -> ResponseResult.ERROR
+    MkpState.FINISHING -> ResponseResult.SUCCESS
+    MkpState.NONE -> null
 }
