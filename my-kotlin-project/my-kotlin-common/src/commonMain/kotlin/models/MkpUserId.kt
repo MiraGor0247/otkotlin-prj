@@ -3,10 +3,10 @@ package ru.otus.otuskotlin.mykotlin.common.models
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class MkplOpId(private val id: String) {
+value class MkpUserId(private val id: String) {
     fun asString() = id
 
     companion object {
-        val NONE = MkplOpId("")
+        val NONE = MkpUserId("")
     }
 }

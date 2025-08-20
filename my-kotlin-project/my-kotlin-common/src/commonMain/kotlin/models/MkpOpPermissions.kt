@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-enum class MkplOpPermissions {
+enum class MkpOpPermissions {
     READ,
     UPDATE,
     DELETE,

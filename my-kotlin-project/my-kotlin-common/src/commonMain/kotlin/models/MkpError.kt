@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.common.models
 
-data class MkplError(
+data class MkpError(
     val code: String = "",
     val group: String = "",
     val field: String = "",

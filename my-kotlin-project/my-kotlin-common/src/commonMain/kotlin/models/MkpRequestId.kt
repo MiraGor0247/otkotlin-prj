@@ -3,10 +3,10 @@ package ru.otus.otuskotlin.mykotlin.common.models
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class MkplOpAmount(private val am: Double) {
-    fun asDouble() = am
+value class MkpRequestId(private val id: String) {
+    fun asString() = id
 
     companion object {
-        val NONE = MkplOpAmount(0.0)
+        val NONE = MkpRequestId("")
     }
 }

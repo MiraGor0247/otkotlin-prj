@@ -4,15 +4,13 @@ import ru.otus.otuskotlin.mykotlin.api.v1.models.OpCreateResponse
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpDebug
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpRequestDebugMode
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpRequestDebugStubs
-import ru.otus.otuskotlin.mykotlin.api.v1.models.OpVisibility
-import ru.otus.otuskotlin.mykotlin.api.v1.models.PaidType
-import ru.otus.otuskotlin.mykotlin.common.MkplContext
+import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.models.*
-import ru.otus.otuskotlin.mykotlin.common.stubs.MkplStubs
+import ru.otus.otuskotlin.mykotlin.common.stubs.MkpStubs
 import ru.otus.otuskotlin.mykotlin.mappers.v1.fromTransport
 import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportOp
 import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportCreateOp
-import ru.otus.otuskotlin.mykotlin.stubs.MkplOpStub
+import ru.otus.otuskotlin.mykotlin.stubs.MkpOpStub
 import kotlin.test.assertEquals
 
 class MapperTest {
@@ -23,43 +21,45 @@ class MapperTest {
                 mode = OpRequestDebugMode.STUB,
                 stub = OpRequestDebugStubs.SUCCESS,
             ),
-            op = MkplOpStub.get().toTransportCreateOp()
+            op = MkpOpStub.get().toTransportCreateOp()
         )
-        val expected = MkplOpStub.prepareResult {
-            id = MkplOpId.NONE
-            ownerId = MkplUserId.NONE
-            lock = MkplOpLock.NONE
+        val expected = MkpOpStub.prepareResult {
+            id = MkpOpId.NONE
+            orderNum != ""
+            amount != MkpOpAmount.NONE
+            visibility = MkpVisibility.VISIBLE_PUBLIC
+            lock = MkpOpLock.NONE
             permissionsClient.clear()
         }
 
-        val context = MkplContext()
+        val context = MkpContext()
         context.fromTransport(req)
 
-        assertEquals(MkplStubs.SUCCESS, context.stubCase)
-        assertEquals(MkplWorkMode.STUB, context.workMode)
+        assertEquals(MkpStubs.SUCCESS, context.stubCase)
+        assertEquals(MkpWorkMode.STUB, context.workMode)
         assertEquals(expected, context.opRequest)
     }
 
     @Test
     fun toTransport() {
-        val context = MkplContext(
-            requestId = MkplRequestId("1234"),
-            command = MkplCommand.CREATE,
-            opResponse = MkplOpStub.get(),
+        val context = MkpContext(
+            requestId = MkpRequestId("1234"),
+            command = MkpCommand.CREATE,
+            opResponse = MkpOpStub.get(),
             errors = mutableListOf(
-                MkplError(
+                MkpError(
                     code = "err",
                     group = "request",
                     field = "title",
                     message = "wrong title",
                 )
             ),
-            state = MkplState.RUNNING,
+            state = MkpState.RUNNING,
         )
 
         val req = context.toTransportOp() as OpCreateResponse
 
-        assertEquals(req.op, MkplOpStub.get().toTransportOp())
+        assertEquals(req.op, MkpOpStub.get().toTransportOp())
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
         assertEquals("request", req.errors?.firstOrNull()?.group)

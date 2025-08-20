@@ -6,7 +6,7 @@ import ru.otus.otuskotlin.mykotlin.api.v1.models.OpReadObject
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpUpdateObject
 import ru.otus.otuskotlin.mykotlin.common.models.*
 
-fun MkplOp.toTransportCreateOp() = OpCreateObject(
+fun MkpOp.toTransportCreateOp() = OpCreateObject(
     orderNum = orderNum,
     title = title,
     ownerId = ownerId.toTransportOp(),
@@ -15,11 +15,11 @@ fun MkplOp.toTransportCreateOp() = OpCreateObject(
     visibility = visibility.toTransportOp(),
     )
 
-fun MkplOp.toTransportReadOp() = OpReadObject(
+fun MkpOp.toTransportReadOp() = OpReadObject(
     id = id.toTransportOp()
 )
 
-fun MkplOp.toTransportUpdateOp() = OpUpdateObject(
+fun MkpOp.toTransportUpdateOp() = OpUpdateObject(
     id = id.toTransportOp(),
     orderNum = orderNum,
     title = title,
@@ -32,13 +32,13 @@ fun MkplOp.toTransportUpdateOp() = OpUpdateObject(
     lock = lock.toTransportOp(),
 )
 
-internal fun MkplOpLock.toTransportOp() = takeIf { it != MkplOpLock.NONE }?.asString()
+internal fun MkpOpLock.toTransportOp() = takeIf { it != MkpOpLock.NONE }?.asString()
 
-internal fun MkplUserId.toTransportOp() = takeIf { it != MkplUserId.NONE}?.asString()
+internal fun MkpUserId.toTransportOp() = takeIf { it != MkpUserId.NONE}?.asString()
 
-internal fun MkplPaymentId.toTransportOp() = takeIf { it != MkplPaymentId.NONE}?.asString()
+internal fun MkpPaymentId.toTransportOp() = takeIf { it != MkpPaymentId.NONE}?.asString()
 
-fun MkplOp.toTransportDeleteOp() = OpDeleteObject(
+fun MkpOp.toTransportDeleteOp() = OpDeleteObject(
     id = id.toTransportOp(),
     lock = lock.toTransportOp(),
 )
