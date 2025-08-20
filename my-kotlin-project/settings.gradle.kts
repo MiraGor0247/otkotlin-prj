@@ -29,3 +29,7 @@ plugins {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":my-kotlin-tmp")
+include(":my-kotlin-api-v1-jackson")
+include(":my-kotlin-api-v1-mappers")
+include(":my-kotlin-common")
+include(":my-kotlin-stubs")
