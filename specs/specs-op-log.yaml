@@ -1,0 +1,110 @@
+openapi: 3.0.4
+info:
+  title: "Order log models ${VERSION_APP}"
+  description: Log models for logging services
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    CommonLogModel:
+      title: Общая модель лога
+      description: Общая модель лога для всех микросервисов системы
+      type: object
+      properties:
+        messageTime:
+          type: string
+        logId:
+          type: string
+        source:
+          type: string
+        op:
+          $ref: '#/components/schemas/MkpLogModel'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorLogModel'
+
+    MkpLogModel:
+      title: Модель лога для микросервиса Order
+      type: object
+      properties:
+        requestId:
+          type: string
+        operation:
+          $ref: '#/components/schemas/MkpLogOperation'
+        requestOp:
+          $ref: '#/components/schemas/OpLog'
+        requestFilter:
+          $ref: '#/components/schemas/OpFilterLog'
+        responseOp:
+          $ref: '#/components/schemas/OpLog'
+        responseOps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpLog'
+
+    MkpLogOperation:
+      type: string
+      enum:
+        - create
+        - read
+        - update
+        - delete
+        - search
+        - offers
+        - init
+        - finish
+
+    ErrorLogModel:
+      title: Модель лога для ошибки
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+        code:
+          type: string
+        level:
+          type: string
+
+    OpLog:
+      title: Модель лога для заказа
+      type: object
+      properties:
+        id:
+          type: string
+        orderNum:
+          type: string
+          description: Номер заказа
+        title:
+          type: string
+          description: Описание заказа
+        ownerId:
+          type: string
+        amount:
+          type: double
+          description: Сумма заказа
+        paymentId:
+          type: string
+          description: Идентификатор платежа
+        payment:
+          type: double
+          description: Сумма платежа
+        opType:
+          type: string
+
+    OpFilterLog:
+      title: Модель лога фильтра
+      properties:
+        searchString:
+          type: string
+        ownerId:
+          type: string
+        opType:
+          type: string
+

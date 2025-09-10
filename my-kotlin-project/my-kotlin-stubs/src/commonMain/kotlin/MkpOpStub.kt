@@ -11,18 +11,18 @@ object MkpOpStub {
     fun prepareResult(block: MkpOp.() -> Unit): MkpOp = get().apply(block)
 
     fun prepareSearchList(title: String, num: String, type: MkpPaidType) = listOf(
-        mkplOpFilter("001",  num, title, type),
-        mkplOpFilter("002",  num, title, type),
-        mkplOpFilter("003",  num, title, type),
-        mkplOpFilter("004",  num, title, type),
-        mkplOpFilter("005",  num, title, type)
+        mkpOpFilter("001",  num, title, type),
+        mkpOpFilter("002",  num, title, type),
+        mkpOpFilter("003",  num, title, type),
+        mkpOpFilter("004",  num, title, type),
+        mkpOpFilter("005",  num, title, type)
     )
 
-    private fun mkplOpFilter(id: String, num: String, title: String, type: MkpPaidType) =
-        mkplOp(OP_ORDER1, id = id, num = num, title = title, type = type)
+    private fun mkpOpFilter(id: String, num: String, title: String, type: MkpPaidType) =
+        mkpOp(OP_ORDER1, id = id, num = num, title = title, type = type)
 
 
-    private fun mkplOp(base: MkpOp, id: String, num: String, title: String, type: MkpPaidType) = base.copy(
+    private fun mkpOp(base: MkpOp, id: String, num: String, title: String, type: MkpPaidType) = base.copy(
         id = MkpOpId(id),
         orderNum = num,
         title =  "order $title $num $id",

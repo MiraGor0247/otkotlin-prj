@@ -7,4 +7,6 @@ enum class MkpCommand {
     UPDATE,
     DELETE,
     SEARCH,
+    INIT,
+    FINISH,
 }
