@@ -1,6 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.rabbit.config
 
-import ru.otus.otuskotlin.mykotlin.base.IMkpAppSettings
+import ru.otus.otuskotlin.mykotlin.app.common.IMkpAppSettings
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
 

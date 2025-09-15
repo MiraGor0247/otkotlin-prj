@@ -9,6 +9,8 @@ import org.junit.BeforeClass
 import org.testcontainers.containers.RabbitMQContainer
 import ru.otus.otuskotlin.mykotlin.api.v1.apiV1Mapper
 import ru.otus.otuskotlin.mykotlin.api.v1.models.*
+import ru.otus.otuskotlin.mykotlin.common.models.MkpOpAmount
+import ru.otus.otuskotlin.mykotlin.common.models.MkpPaidType
 import ru.otus.otuskotlin.mykotlin.rabbit.RabbitApp
 import ru.otus.otuskotlin.mykotlin.rabbit.config.MkpAppSettings
 import ru.otus.otuskotlin.mykotlin.rabbit.config.RabbitConfig
@@ -28,10 +30,10 @@ internal class RabbitMqTest {
 
         private val container = run {
 //            Этот образ предназначен для дебагинга, он содержит панель управления на порту httpPort
-            RabbitMQContainer("rabbitmq:3-management").apply {
+ //           RabbitMQContainer("rabbitmq:3-management").apply {
 //            Этот образ минимальный и не содержит панель управления
-//            RabbitMQContainer("rabbitmq:latest").apply {
-//                withExposedPorts(5672, 15672) // Для 3-management
+            RabbitMQContainer("rabbitmq:latest").apply {
+                withExposedPorts(5672, 15672) // Для 3-management
                 withExposedPorts(RMQ_PORT)
             }
         }
@@ -113,7 +115,7 @@ internal class RabbitMqTest {
 
                 assertEquals(expected.orderNum, response.op?.orderNum)
                 assertEquals(expected.title, response.op?.title)
-                assertEquals(expected.opType, response.op?.opType)
+                assertEquals(expected.amount, response.op?.amount?.let { MkpOpAmount(it) })
             }
         }
     }
@@ -122,7 +124,7 @@ internal class RabbitMqTest {
             op = OpCreateObject(
                 orderNum = orderNum,
                 title = title,
-                opType = opType
+                amount = amount.asDouble()
             ),
             requestType = "create",
             debug = OpDebug(
