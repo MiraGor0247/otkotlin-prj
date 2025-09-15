@@ -11,6 +11,12 @@ fun MkpContext.toTransportOp(): IResponse = when (val cmd = command) {
     MkpCommand.UPDATE -> toTransportUpdate()
     MkpCommand.DELETE -> toTransportDelete()
     MkpCommand.SEARCH -> toTransportSearch()
+    MkpCommand.INIT -> toTransportInit()
+    MkpCommand.FINISH -> object: IResponse {
+        override val responseType: String? = null
+        override val result: ResponseResult? = null
+        override val errors: List<Error>? = null
+    }
     MkpCommand.NONE -> throw UnknownMkpCommand(cmd)
 }
 
@@ -42,6 +48,11 @@ fun MkpContext.toTransportSearch() = OpSearchResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     ops = opsResponse.toTransportOp()
+)
+
+fun MkpContext.toTransportInit() = OpInitResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
 )
 
 fun List<MkpOp>.toTransportOp(): List<OpResponseObject>? = this
