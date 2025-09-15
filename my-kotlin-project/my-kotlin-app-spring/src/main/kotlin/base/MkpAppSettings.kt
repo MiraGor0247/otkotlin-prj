@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.mykotlin.base
 
+import ru.otus.otuskotlin.mykotlin.app.common.IMkpAppSettings
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
 

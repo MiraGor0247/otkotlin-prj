@@ -1,8 +1,10 @@
 package ru.otus.otuskotlin.mykotlin.api.log
 
 import kotlinx.datetime.Clock
+import ru.otus.otuskotlin.mykotlin.api.log.models.*
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.models.*
+
 
 fun MkpContext.toLog(logId: String) = CommonLogModel(
     messageTime = Clock.System.now().toString(),
@@ -25,15 +27,14 @@ private fun MkpContext.toMkpLog(): MkpLogModel? {
 
 private fun MkpOpFilter.toLog() = OpFilterLog(
     searchString = searchString.takeIf { it.isNotBlank() },
-    userId = userId.takeIf { it != MkpUserId.NONE }?.asString(),
-    paidType = paidType.takeIf { it != MkpPaidType.NONE }?.name,
+    ownerId = userId.takeIf { it != MkpUserId.NONE }?.asString(),
+    opType = paidType.takeIf { it != MkpPaidType.NONE }?.name,
 )
 
 private fun MkpError.toLog() = ErrorLogModel(
     message = message.takeIf { it.isNotBlank() },
     field = field.takeIf { it.isNotBlank() },
     code = code.takeIf { it.isNotBlank() },
-    level = level.name,
 )
 
 private fun MkpOp.toLog() = OpLog(
@@ -41,8 +42,7 @@ private fun MkpOp.toLog() = OpLog(
     orderNum = orderNum.takeIf { it.isNotBlank() },
     title = title.takeIf { it.isNotBlank() },
     ownerId = ownerId.takeIf { it != MkpUserId.NONE }?.asString(),
-    amount = amount.takeIf { it != MkpOpAmount.NONE }?.asString(),
+    amount = amount.takeIf { it != MkpOpAmount.NONE }?.asDouble(),
     paymentId = paymentId.takeIf { it != MkpPaymentId.NONE }?.asString(),
     opType = opType.takeIf { it != MkpPaidType.NONE }?.name,
-    visibility = visibility.takeIf { it != MkpVisibility.NONE }?.name,
 )

@@ -5,7 +5,7 @@ import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Delivery
 import ru.otus.otuskotlin.mykotlin.api.v1.apiV1Mapper
 import ru.otus.otuskotlin.mykotlin.api.v1.models.IRequest
-import ru.otus.otuskotlin.mykotlin.base.controllerHelper
+import ru.otus.otuskotlin.mykotlin.app.common.controllerHelper
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.logs.asMkpError
 import ru.otus.otuskotlin.mykotlin.common.models.MkpState
@@ -16,7 +16,7 @@ class RabbitDirectController(
     private val appSettings: MkpAppSettings,
 ) : RabbitProcessorBase(
     rabbitConfig = appSettings.rabbit,
-    exchangeConfig = appSettings.controllersConfigV1,
+    exchangeConfig = appSettings.controllerConfig,
     loggerProvider = appSettings.corSettings.loggerProvider,
 ) {
     override suspend fun Channel.processMessage(message: Delivery) {
