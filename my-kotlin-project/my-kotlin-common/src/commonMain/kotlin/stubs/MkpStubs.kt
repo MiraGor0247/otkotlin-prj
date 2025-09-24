@@ -7,6 +7,7 @@ enum class MkpStubs {
     BAD_ID,
     BAD_TITLE,
     BAD_NUMBER,
+    BAD_AMOUNT,
     BAD_VISIBILITY,
     CANNOT_DELETE,
     BAD_SEARCH_STRING,

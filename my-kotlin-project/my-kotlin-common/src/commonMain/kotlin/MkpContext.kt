@@ -10,17 +10,25 @@ data class MkpContext(
     var state: MkpState = MkpState.NONE,
     val errors: MutableList<MkpError> = mutableListOf(),
 
+    var corSettings: MkpCorSettings = MkpCorSettings(),
     var workMode: MkpWorkMode = MkpWorkMode.PROD,
     var stubCase: MkpStubs = MkpStubs.NONE,
     var wsSession: IMkpWsSession = IMkpWsSession.NONE,
 
     var requestId: MkpRequestId = MkpRequestId.NONE,
     var timeStart: Instant = Instant.NONE,
+
     var opRequest: MkpOp = MkpOp(),
     var opFilterRequest: MkpOpFilter = MkpOpFilter(),
 
     var opResponse: MkpOp = MkpOp(),
     var opsResponse: MutableList<MkpOp> = mutableListOf(),
+
+    var opValidating: MkpOp = MkpOp(),
+    var opFilterValidating: MkpOpFilter = MkpOpFilter(),
+
+    var opValidated: MkpOp = MkpOp(),
+    var opFilterValidated: MkpOpFilter = MkpOpFilter(),
 
     )
 

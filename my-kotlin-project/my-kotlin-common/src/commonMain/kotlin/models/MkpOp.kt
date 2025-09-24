@@ -15,6 +15,10 @@ data class MkpOp(
 ) {
     fun isEmpty() = this == NONE
 
+    fun deepCopy(): MkpOp = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
+
     companion object {
         private val NONE = MkpOp()
     }
