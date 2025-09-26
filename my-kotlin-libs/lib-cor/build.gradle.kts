@@ -4,24 +4,17 @@ plugins {
 
 kotlin {
     sourceSets {
-        all { languageSettings.optIn("kotlin.RequiresOptIn") }
-
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-
-                implementation(project(":my-kotlin-common"))
-                implementation(project(":my-kotlin-stubs"))
-
-                implementation(libs.cor)
+                implementation(libs.coroutines.core)
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-
-                api(libs.coroutines.test)
+                implementation(libs.coroutines.test)
             }
         }
         jvmMain {

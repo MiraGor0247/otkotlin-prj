@@ -1,6 +1,7 @@
 package ru.otus.otuskotlin.mykotlin.stubs
 
 import ru.otus.otuskotlin.mykotlin.common.models.MkpOp
+import ru.otus.otuskotlin.mykotlin.common.models.MkpOpAmount
 import ru.otus.otuskotlin.mykotlin.common.models.MkpOpId
 import ru.otus.otuskotlin.mykotlin.common.models.MkpPaidType
 import ru.otus.otuskotlin.mykotlin.stubs.MkpOpStubOrder.OP_ORDER1
