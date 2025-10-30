@@ -18,9 +18,15 @@ fun Throwable.asMkpError(
 )
 
 inline fun MkpContext.addError(vararg error: MkpError) = errors.addAll(error)
+inline fun MkpContext.addErrors(error: Collection<MkpError>) = errors.addAll(error)
 
 inline fun MkpContext.fail(error: MkpError) {
     addError(error)
+    state = MkpState.FAILING
+}
+
+inline fun MkpContext.fail(errors: Collection<MkpError>) {
+    addErrors(errors)
     state = MkpState.FAILING
 }
 
@@ -39,4 +45,16 @@ inline fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+inline fun errorSystem(
+    violationCode: String,
+    level: LogLevel = LogLevel.ERROR,
+    e: Throwable,
+) = MkpError(
+    code = "system-$violationCode",
+    group = "system",
+    message = "System error occurred. Our stuff has been informed, please retry later",
+    level = level,
+    exception = e,
 )

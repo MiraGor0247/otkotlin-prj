@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.mykotlin.common
 
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.mykotlin.common.models.*
+import ru.otus.otuskotlin.mykotlin.common.repo.IRepoOp
 import ru.otus.otuskotlin.mykotlin.common.stubs.MkpStubs
 import ru.otus.otuskotlin.mykotlin.common.ws.IMkpWsSession
 
@@ -29,6 +30,12 @@ data class MkpContext(
 
     var opValidated: MkpOp = MkpOp(),
     var opFilterValidated: MkpOpFilter = MkpOpFilter(),
+
+    var opRepo: IRepoOp = IRepoOp.NONE,
+    var opRepoRead: MkpOp = MkpOp(), // То, что прочитали из репозитория
+    var opRepoPrepare: MkpOp= MkpOp(), // То, что готовим для сохранения в БД
+    var opRepoDone: MkpOp= MkpOp(),  // Результат, полученный из БД
+    var opsRepoDone: MutableList<MkpOp> = mutableListOf(),
 
     )
 
