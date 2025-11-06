@@ -7,8 +7,10 @@ import ru.otus.otuskotlin.mykotlin.lib.cor.rootChain
 import ru.otus.otuskotlin.mykotlin.kotlin.general.initStatus
 import ru.otus.otuskotlin.mykotlin.kotlin.general.operation
 import ru.otus.otuskotlin.mykotlin.kotlin.general.stubs
+import ru.otus.otuskotlin.mykotlin.kotlin.repo.*
 import ru.otus.otuskotlin.mykotlin.kotlin.stubs.*
 import ru.otus.otuskotlin.mykotlin.kotlin.validation.*
+import ru.otus.otuskotlin.mykotlin.lib.cor.chain
 import ru.otus.otuskotlin.mykotlin.lib.cor.worker
 
 
@@ -19,6 +21,7 @@ class MkpOpProcessor(
 
     private val businessChain = rootChain<MkpContext> {
         initStatus("Инициализация статуса")
+        initRepo("Инициализация репозитория")
 
         operation("Создание заказа", MkpCommand.CREATE) {
             stubs("Обработка стабов") {
@@ -37,6 +40,13 @@ class MkpOpProcessor(
 
                 finishAdValidation("Завершение проверок")
             }
+
+            chain {
+                title = "Логика сохранения"
+                repoPrepareCreate("Подготовка объекта для сохранения")
+                repoCreate("Создание заказа в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Получить заказ", MkpCommand.READ) {
             stubs("Обработка стабов") {
@@ -52,6 +62,16 @@ class MkpOpProcessor(
 
                 finishAdValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика чтения"
+                repoRead("Чтение заказа из БД")
+                worker {
+                    title = "Подготовка ответа для Read"
+                    on { state == MkpState.RUNNING }
+                    handle { opRepoDone = opRepoRead }
+                }
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Изменить заказ", MkpCommand.UPDATE) {
             stubs("Обработка стабов") {
@@ -76,6 +96,14 @@ class MkpOpProcessor(
 
                 finishAdValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика сохранения"
+                repoRead("Чтение заказа из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление заказа в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Удалить заказ", MkpCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -94,6 +122,14 @@ class MkpOpProcessor(
 
                 finishAdValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение заказа из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление заказа из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Поиск заказов", MkpCommand.SEARCH) {
             stubs("Обработка стабов") {
@@ -107,6 +143,13 @@ class MkpOpProcessor(
 
                 finishAdFilterValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика поиска в БД"
+                repoRead("Чтение заказа из БД")
+                repoPrepareOrders("Подготовка данных для поиска заказа")
+                repoSearch("Поиск предложений для заказа в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }
