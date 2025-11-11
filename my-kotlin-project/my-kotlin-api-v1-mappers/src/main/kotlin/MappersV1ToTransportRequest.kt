@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.mappers.v1
+package ru.otus.otuskotlin.mykotlin.api.v1.mappers
 
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpCreateObject
 import ru.otus.otuskotlin.mykotlin.api.v1.models.OpDeleteObject

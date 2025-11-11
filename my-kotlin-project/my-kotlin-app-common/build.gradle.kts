@@ -13,7 +13,6 @@ kotlin {
                 // transport models
                 implementation(project(":my-kotlin-common"))
                 implementation(project(":my-kotlin-api-log"))
-
                 implementation(project(":my-kotlin-business"))
             }
         }
