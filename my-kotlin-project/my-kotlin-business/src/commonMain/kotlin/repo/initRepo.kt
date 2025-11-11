@@ -14,12 +14,12 @@ fun ICorChainDsl<MkpContext>.initRepo(title: String) = worker {
         Вычисление основного рабочего репозитория в зависимости от зпрошенного режима работы        
     """.trimIndent()
     handle {
-        adRepo = when {
+        opRepo = when {
             workMode == MkpWorkMode.TEST -> corSettings.repoTest
             workMode == MkpWorkMode.STUB -> corSettings.repoStub
             else -> corSettings.repoProd
         }
-        if (workMode != MkpWorkMode.STUB && adRepo == IRepoOp.NONE) fail(
+        if (workMode != MkpWorkMode.STUB && opRepo == IRepoOp.NONE) fail(
             errorSystem(
                 violationCode = "dbNotConfigured",
                 e = MkpOpDbNotConfiguredException(workMode)
