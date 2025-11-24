@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.validation
+package ru.otus.otuskotlin.mykotlin.business.validation
 
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.mykotlin.common.MkpContext

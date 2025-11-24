@@ -143,6 +143,8 @@ class MkpOpProcessor(
 
                 finishAdFilterValidation("Успешное завершение процедуры валидации")
             }
+            repoSearch("Поиск заказов в БД по фильтру")
+            prepareResult("Подготовка ответа")
             chain {
                 title = "Логика поиска в БД"
                 repoRead("Чтение заказа из БД")

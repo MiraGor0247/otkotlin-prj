@@ -12,6 +12,7 @@ kotlin {
 
                 implementation(project(":my-kotlin-common"))
                 implementation(project(":my-kotlin-stubs"))
+                implementation(project(":my-kotlin-repo-tests"))
 
                 implementation(libs.cor)
             }
@@ -22,6 +23,8 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
 
                 api(libs.coroutines.test)
+                implementation(projects.myKotlinRepoTests)
+                implementation(projects.myKotlinRepoInmemory)
             }
         }
         jvmMain {

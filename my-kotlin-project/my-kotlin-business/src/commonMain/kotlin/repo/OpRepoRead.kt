@@ -15,9 +15,9 @@ fun ICorChainDsl<MkpContext>.repoRead(title: String) = worker {
     description = "Чтение объявления из БД"
     on { state == MkpState.RUNNING }
     handle {
-        val request = DbOpIdRequest(opRepoPrepare)
+        val request = DbOpIdRequest(opValidated)
         when(val result = opRepo.readOp(request)) {
-            is DbOpResponseOk -> opRepoDone = result.data
+            is DbOpResponseOk -> opRepoRead = result.data
             is DbOpResponseErr -> fail(result.errors)
             is DbOpResponseErrWithData -> {
                 fail(result.errors)

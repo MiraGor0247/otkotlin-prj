@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.repo
+package ru.otus.otuskotlin.mykotlin.business.repo
 
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.mykotlin.common.MkpContext

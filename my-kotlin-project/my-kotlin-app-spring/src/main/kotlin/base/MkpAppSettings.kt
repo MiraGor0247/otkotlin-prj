@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.base
+package ru.otus.otuskotlin.mykotlin.app.spring.base
 
 import ru.otus.otuskotlin.mykotlin.app.common.IMkpAppSettings
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings

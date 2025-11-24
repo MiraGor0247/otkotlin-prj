@@ -1,1 +1,1 @@
-package ru.otus.otuskotlin.mykotlin.business.stub
+package ru.otus.otuskotlin.mykotlin.business

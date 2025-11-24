@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.validation
+package ru.otus.otuskotlin.mykotlin.business.validation
 
 import ru.otus.otuskotlin.mykotlin.common.models.MkpCommand
 import kotlin.test.Test

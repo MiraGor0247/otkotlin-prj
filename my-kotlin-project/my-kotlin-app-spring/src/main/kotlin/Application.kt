@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin
+package ru.otus.otuskotlin.mykotlin.app.spring
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

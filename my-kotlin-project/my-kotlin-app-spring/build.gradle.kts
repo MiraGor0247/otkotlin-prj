@@ -30,10 +30,17 @@ dependencies {
     implementation("ru.otus.otuskotlin.mykotlin.libs:lib-logging-logback")
     // biz
     implementation(project(":my-kotlin-business"))
+    // DB
+    implementation(projects.myKotlinRepoStubs)
+    implementation(projects.myKotlinRepoInmemory)
+    implementation(projects.myKotlinRepoPg)
+    testImplementation(projects.myKotlinRepoCommon)
+    testImplementation(projects.myKotlinStubs)
     // tests
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("test-junit"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.mockk)
 }
 
 tasks {
@@ -52,4 +59,18 @@ tasks {
 
 tasks.test {
     useJUnitPlatform()
+    environment("MKPOPS_DB", "test_db")
+}
+
+tasks.bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-base:latest"
+    environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
+    buildpacks.set(
+        listOf(
+            "docker.io/paketobuildpacks/adoptium",
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "docker.io/paketobuildpacks/health-checker:latest"
+        )
+    )
+
 }

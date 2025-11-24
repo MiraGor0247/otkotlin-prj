@@ -1,10 +1,10 @@
-package ru.otus.otuskotlin.mykotlin.controller
+package ru.otus.otuskotlin.mykotlin.app.spring.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.otus.otuskotlin.mykotlin.api.v1.models.*
 import ru.otus.otuskotlin.mykotlin.app.common.controllerHelper
-import ru.otus.otuskotlin.mykotlin.base.MkpAppSettings
-import ru.otus.otuskotlin.mykotlin.mappers.v1.*
+import ru.otus.otuskotlin.mykotlin.app.spring.base.MkpAppSettings
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.*
 import kotlin.reflect.KClass
 
 @Suppress("unused")

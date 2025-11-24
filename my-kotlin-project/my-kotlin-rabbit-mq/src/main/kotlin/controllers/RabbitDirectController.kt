@@ -9,8 +9,8 @@ import ru.otus.otuskotlin.mykotlin.app.common.controllerHelper
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.logs.asMkpError
 import ru.otus.otuskotlin.mykotlin.common.models.MkpState
-import ru.otus.otuskotlin.mykotlin.mappers.v1.fromTransport
-import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
 
 class RabbitDirectController(
     private val appSettings: MkpAppSettings,

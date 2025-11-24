@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.repo
+package ru.otus.otuskotlin.mykotlin.business.repo
 
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -7,14 +7,12 @@ import ru.otus.otuskotlin.mykotlin.repo.tests.OpRepositoryMock
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
 import ru.otus.otuskotlin.mykotlin.common.models.*
-import ru.otus.otuskotlin.mykotlin.common.repo.DbOpResponseErr
 import ru.otus.otuskotlin.mykotlin.common.repo.DbOpResponseOk
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
-import kotlin.test.assertTrue
 
 class RepoUpdateBusinessTests {
     private val userId = MkpUserId("321")
-    private val command = MkpCommand.DELETE
+    private val command = MkpCommand.UPDATE
 
     private val initOp = MkpOp(
         id = MkpOpId("123"),
@@ -68,11 +66,11 @@ class RepoUpdateBusinessTests {
         )
         processor.exec(ctx)
         assertEquals(MkpState.FINISHING, ctx.state)
-        assertEquals(initOp.id, ctx.opResponse.id)
-        assertEquals(initOp.title, ctx.opResponse.title)
-        assertEquals(initOp.orderNum, ctx.opResponse.orderNum)
-        assertEquals(initOp.amount, ctx.opResponse.amount)
-        assertEquals(initOp.opType, ctx.opResponse.opType)
-        assertEquals(initOp.visibility, ctx.opResponse.visibility)
+        assertEquals(opToUpdate.id, ctx.opResponse.id)
+        assertEquals(opToUpdate.title, ctx.opResponse.title)
+        assertEquals(opToUpdate.orderNum, ctx.opResponse.orderNum)
+        assertEquals(opToUpdate.amount, ctx.opResponse.amount)
+        assertEquals(opToUpdate.opType, ctx.opResponse.opType)
+        assertEquals(opToUpdate.visibility, ctx.opResponse.visibility)
     }
 }
