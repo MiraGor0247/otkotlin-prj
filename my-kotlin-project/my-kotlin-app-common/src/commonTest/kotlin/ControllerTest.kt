@@ -1,21 +1,20 @@
+package ru.otus.otuskotlin.mykotlin.app.common
 
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import ru.otus.otuskotlin.mykotlin.api.v1.models.*
-import ru.otus.otuskotlin.mykotlin.app.common.IMkpAppSettings
-import ru.otus.otuskotlin.mykotlin.app.common.controllerHelper
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
-import ru.otus.otuskotlin.mykotlin.common.models.MkpOpAmount
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
-import ru.otus.otuskotlin.mykotlin.mappers.v1.fromTransport
-import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v1.models.*
 
 class ControllerTest {
     private val request = OpCreateRequest(
         op = OpCreateObject(
             orderNum = "0011",
             title = "order 11",
+            amount = 1000.0,
             opType = PaidType.UNPAID,
             visibility = OpVisibility.PUBLIC,
         ),
@@ -31,18 +30,8 @@ class ControllerTest {
             { fromTransport(request) },
             { toTransportOp() as OpCreateResponse },
             ControllerTest::class,
-            "controller-v2-test"
+            "controller-test"
         )
-
-    class TestApplicationCall(private val request: IRequest) {
-        var res: IResponse? = null
-
-        @Suppress("UNCHECKED_CAST")
-        fun <T : IRequest> receive(): T = request as T
-        fun respond(res: IResponse) {
-            this.res = res
-        }
-    }
 
     @Test
     fun springHelperTest() = runTest {

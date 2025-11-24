@@ -7,9 +7,9 @@ import ru.otus.otuskotlin.mykotlin.api.v1.models.OpRequestDebugStubs
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.models.*
 import ru.otus.otuskotlin.mykotlin.common.stubs.MkpStubs
-import ru.otus.otuskotlin.mykotlin.mappers.v1.fromTransport
-import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportOp
-import ru.otus.otuskotlin.mykotlin.mappers.v1.toTransportCreateOp
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportCreateOp
 import ru.otus.otuskotlin.mykotlin.stubs.MkpOpStub
 import kotlin.test.assertEquals
 
