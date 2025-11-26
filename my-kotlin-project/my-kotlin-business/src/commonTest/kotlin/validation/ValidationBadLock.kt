@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.validation
+package ru.otus.otuskotlin.mykotlin.business.validation
 
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
@@ -15,13 +15,13 @@ fun validationLockCorrect(command: MkpCommand, processor: MkpOpProcessor) = runT
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
             title = "abc",
             amount = MkpOpAmount(200.00),
             opType = MkpPaidType.PAID,
             visibility = MkpVisibility.VISIBLE_PUBLIC,
-            lock = MkpOpLock("42-24-aaa-BBB"),
+            lock = MkpOpLock("001"),
         ),
     )
     processor.exec(ctx)
@@ -35,13 +35,13 @@ fun validationLockTrim(command: MkpCommand, processor: MkpOpProcessor) = runTest
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
             title = "abc",
             amount = MkpOpAmount(200.00),
             opType = MkpPaidType.PAID,
             visibility = MkpVisibility.VISIBLE_PUBLIC,
-            lock = MkpOpLock(" \n\t 42-24-aaa-BBB \n\t "),
+            lock = MkpOpLock(" \n\t 001 \n\t "),
         ),
     )
     processor.exec(ctx)
@@ -55,7 +55,7 @@ fun validationLockEmpty(command: MkpCommand, processor: MkpOpProcessor) = runTes
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
             title = "abc",
             amount = MkpOpAmount(200.00),
@@ -78,7 +78,7 @@ fun validationLockFormat(command: MkpCommand, processor: MkpOpProcessor) = runTe
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
             title = "abc",
             amount = MkpOpAmount(200.00),

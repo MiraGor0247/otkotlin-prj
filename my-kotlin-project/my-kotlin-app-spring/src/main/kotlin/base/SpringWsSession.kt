@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.base
+package ru.otus.otuskotlin.mykotlin.app.spring.base
 
 import org.springframework.web.reactive.socket.WebSocketSession
 import reactor.core.publisher.Mono

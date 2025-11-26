@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.stub
+package ru.otus.otuskotlin.mykotlin.business.stub
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

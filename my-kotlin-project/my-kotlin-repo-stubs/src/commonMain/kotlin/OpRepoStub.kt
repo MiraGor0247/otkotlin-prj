@@ -30,7 +30,7 @@ class OpRepoStub() : IRepoOp {
     }
 
     override suspend fun searchOp(rq: DbOpFilterRequest): IDbOpsResponse {
-        return DbAdsResponseOk(
+        return DbOpsResponseOk(
             data = MkpOpStub.prepareSearchList(title = "", num = "", MkpPaidType.UNPAID),
         )
     }

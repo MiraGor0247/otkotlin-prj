@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.repo
+package ru.otus.otuskotlin.mykotlin.business.repo
 
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -24,6 +24,7 @@ class RepoDeleteBusinessTests {
         ownerId = userId,
         opType = MkpPaidType.PAID,
         visibility = MkpVisibility.VISIBLE_PUBLIC,
+        lock = MkpOpLock("123-234-abc-ABC"),
     )
     private val repo = OpRepositoryMock(
         invokeReadOp = {

@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.validation
+package ru.otus.otuskotlin.mykotlin.business.validation
 
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.mykotlin.common.models.*
@@ -15,13 +15,13 @@ fun validationTitleCorrect(command: MkpCommand, processor: MkpOpProcessor) = run
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
-            title = "abc",
+            title = "Kia Rio E355AA150, замена бампера",
             amount = MkpOpAmount(200.00),
             opType = MkpPaidType.PAID,
             visibility = MkpVisibility.VISIBLE_PUBLIC,
-            lock = MkpOpLock("42-24-aaa-BBB"),
+            lock = MkpOpLock("001"),
         ),
     )
     processor.exec(ctx)
@@ -35,13 +35,13 @@ fun validationTitleEmpty(command: MkpCommand, processor: MkpOpProcessor) = runTe
         state = MkpState.NONE,
         workMode = MkpWorkMode.TEST,
         opRequest = MkpOp(
-            id = MkpOpId("42-24-aaa-BBB"),
+            id = MkpOpId("111"),
             orderNum = "42",
             title = "",
             amount = MkpOpAmount(200.00),
             opType = MkpPaidType.PAID,
             visibility = MkpVisibility.VISIBLE_PUBLIC,
-            lock = MkpOpLock("42-24-aaa-BBB"),
+            lock = MkpOpLock("001"),
         ),
     )
     processor.exec(ctx)

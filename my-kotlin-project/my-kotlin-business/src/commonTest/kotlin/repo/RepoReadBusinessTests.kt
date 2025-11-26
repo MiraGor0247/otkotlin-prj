@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.business.stub.repo
+package ru.otus.otuskotlin.mykotlin.business.repo
 
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -7,10 +7,8 @@ import ru.otus.otuskotlin.mykotlin.repo.tests.OpRepositoryMock
 import ru.otus.otuskotlin.mykotlin.common.MkpContext
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
 import ru.otus.otuskotlin.mykotlin.common.models.*
-import ru.otus.otuskotlin.mykotlin.common.repo.DbOpResponseErr
 import ru.otus.otuskotlin.mykotlin.common.repo.DbOpResponseOk
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
-import kotlin.test.assertTrue
 
 class RepoReadBusinessTests {
     private val userId = MkpUserId("321")

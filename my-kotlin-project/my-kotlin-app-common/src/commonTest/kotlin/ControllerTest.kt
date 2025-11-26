@@ -1,13 +1,13 @@
 package ru.otus.otuskotlin.mykotlin.app.common
 
 import kotlinx.coroutines.test.runTest
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
+import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v1.models.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
 import ru.otus.otuskotlin.mykotlin.kotlin.MkpOpProcessor
-import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
-import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
-import ru.otus.otuskotlin.mykotlin.api.v1.models.*
 
 class ControllerTest {
     private val request = OpCreateRequest(

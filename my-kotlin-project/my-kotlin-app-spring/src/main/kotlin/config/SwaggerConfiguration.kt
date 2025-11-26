@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.mykotlin.config
+package ru.otus.otuskotlin.mykotlin.app.spring.config
 
 import org.springdoc.core.configuration.SpringDocConfiguration
 import org.springdoc.core.properties.SpringDocConfigProperties

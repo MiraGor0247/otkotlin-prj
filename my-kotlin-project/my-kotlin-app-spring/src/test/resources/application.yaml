@@ -30,8 +30,8 @@ orderpayments:
 
 psql:
   schema: public
-  database: "${MKPOPS_DB:Customize Toolbar...}"
+  database: "${MKPOPS_DB:mykotlin_ops}"
   host: "${MKPOPS_HOST:localhost}"
-  port: "${MKPOPS_PORT:5433}"
+  port: 5433
   user: "${MKPOPS_USER:postgres}"
   password: "${MKPOPS_PASS:mykotlin-pass}"
