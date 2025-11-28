@@ -63,6 +63,7 @@ tasks.test {
     environment("MKPOPS_DB", "test_db")
 }
 
+
 tasks.bootBuildImage {
     builder = "paketobuildpacks/builder-jammy-base:latest"
     environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
