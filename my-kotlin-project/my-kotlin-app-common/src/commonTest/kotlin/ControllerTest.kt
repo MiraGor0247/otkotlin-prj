@@ -1,9 +1,9 @@
 package ru.otus.otuskotlin.mykotlin.app.common
 
 import kotlinx.coroutines.test.runTest
-import ru.otus.otuskotlin.mykotlin.api.v1.mappers.fromTransport
-import ru.otus.otuskotlin.mykotlin.api.v1.mappers.toTransportOp
-import ru.otus.otuskotlin.mykotlin.api.v1.models.*
+import ru.otus.otuskotlin.mykotlin.api.kmp.fromTransport
+import ru.otus.otuskotlin.mykotlin.api.kmp.toTransportOp
+import ru.otus.otuskotlin.mykotlin.api.v2.models.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import ru.otus.otuskotlin.mykotlin.common.MkpCorSettings
