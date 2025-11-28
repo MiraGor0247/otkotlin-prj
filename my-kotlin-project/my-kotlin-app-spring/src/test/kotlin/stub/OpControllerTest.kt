@@ -26,35 +26,35 @@ internal class OpControllerTest  {
 
     @Test
     fun createOp() = testStubOp(
-        "/v1/ad/create",
+        "/v1/op/create",
         OpCreateRequest(),
         MkpContext().toTransportCreate().copy(responseType = "create")
     )
 
     @Test
     fun readOp() = testStubOp(
-        "/v1/ad/read",
+        "/v1/op/read",
         OpReadRequest(),
         MkpContext().toTransportRead().copy(responseType = "read")
     )
 
     @Test
     fun updateOp() = testStubOp(
-        "/v1/ad/update",
+        "/v1/op/update",
         OpUpdateRequest(),
         MkpContext().toTransportUpdate().copy(responseType = "update")
     )
 
     @Test
     fun deleteOp() = testStubOp(
-        "/v1/ad/delete",
+        "/v1/op/delete",
         OpDeleteRequest(),
         MkpContext().toTransportDelete().copy(responseType = "delete")
     )
 
     @Test
     fun searchOp() = testStubOp(
-        "/v1/ad/search",
+        "/v1/op/search",
         OpSearchRequest(),
         MkpContext().toTransportSearch().copy(responseType = "search")
     )

@@ -99,7 +99,7 @@ internal abstract class OpRepoBaseTest {
     ) {
         webClient
             .post()
-            .uri("/v1/ad/$url")
+            .uri("/v1/op/$url")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(requestObj))
             .exchange()

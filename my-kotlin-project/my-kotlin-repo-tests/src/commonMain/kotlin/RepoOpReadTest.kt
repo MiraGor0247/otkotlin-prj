@@ -30,7 +30,7 @@ abstract class RepoOpReadTest  {
             createInitTestModel("read")
         )
 
-        val notFoundId = MkpOpId("ad-repo-read-notFound")
+        val notFoundId = MkpOpId("op-repo-read-notFound")
 
     }
 }
