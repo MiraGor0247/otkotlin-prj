@@ -26,6 +26,7 @@ dependencies {
     // api
     implementation(project(":my-kotlin-api-v1-jackson"))
     implementation(project(":my-kotlin-api-v1-mappers"))
+    implementation(project(":my-kotlin-api-kmp"))
     implementation("ru.otus.otuskotlin.mykotlin.libs:lib-logging-common")
     implementation("ru.otus.otuskotlin.mykotlin.libs:lib-logging-logback")
     // biz
@@ -61,6 +62,7 @@ tasks.test {
     useJUnitPlatform()
     environment("MKPOPS_DB", "test_db")
 }
+
 
 tasks.bootBuildImage {
     builder = "paketobuildpacks/builder-jammy-base:latest"
