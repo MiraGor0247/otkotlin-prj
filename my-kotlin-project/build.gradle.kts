@@ -48,6 +48,6 @@ tasks {
     }
 
     register("buildImages") {
-        dependsOn(project("my-mykotlin-app-spring").tasks.getByName("bootBuildImage"))
+        dependsOn(project("my-kotlin-app-spring").tasks.getByName("bootBuildImage"))
     }
 }
